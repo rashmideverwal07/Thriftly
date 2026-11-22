@@ -1,0 +1,1397 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Thriftly | Campus Marketplace</title>
+    <meta name="description" content="Buy, sell and rent things within your college community.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="navbar">
+
+        <div class="nav-left">
+            <button id="menuButton" class="menu-button" aria-label="Open categories">☰</button>
+
+            <a href="#" class="logo" id="homeLink">
+                Thriftly<span>.</span>
+            </a>
+        </div>
+
+        <div class="top-search">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search books, clothes, electronics..."
+            >
+            <button id="searchButton">Search</button>
+        </div>
+
+        <div class="nav-actions">
+
+            <button class="icon-button wishlist-icon-button" id="wishlistButton" aria-label="Wishlist" title="Wishlist">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/>
+                </svg>
+                <span class="cart-count-badge hidden" id="wishlistCountBadge">0</span>
+            </button>
+
+            <button class="icon-button cart-icon-button" id="cartButton" aria-label="Shopping bag" title="Shopping bag">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 8h14l1 13H4L5 8Z"/>
+                    <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+                </svg>
+                <span class="cart-count-badge hidden" id="cartCountBadge">0</span>
+            </button>
+
+            <!-- SELLER DASHBOARD ICON & NOTIFICATIONS (Priority 7) -->
+            <button class="icon-button seller-icon-button hidden" id="dashboardButton" aria-label="Seller Dashboard" title="Seller Dashboard & Incoming Requests">
+                <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                <span class="cart-count-badge hidden" id="sellerNotificationBadge">0</span>
+            </button>
+
+        <button class="nav-text-button" id="loginButton">Log in</button>
+        <button class="nav-user-profile hidden" id="navUserProfile"
+        aria-label="My Account" title="My Account">
+
+    <div class="nav-user-avatar" id="navUserAvatar">
+        S
+    </div>
+
+    <div class="nav-user-details">
+        <span id="navUserName">Student</span>
+        <small>Logged in</small>
+    </div>
+
+</button>
+
+<button class="sell-button" id="sellButton">List an item</button>
+
+        </div>
+
+    </header>
+
+
+    <!-- SIDEBAR -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+            <h2>Categories</h2>
+            <button id="closeSidebar" class="close-button">×</button>
+        </div>
+
+        <button class="sidebar-category active" data-category="All">
+            All items
+        </button>
+
+        <button class="sidebar-category" data-category="Books">
+            Books & Stationery
+        </button>
+
+        <button class="sidebar-category" data-category="Fashion">
+            Clothes & Accessories
+        </button>
+
+        <button class="sidebar-category" data-category="Electronics">
+            Electronics
+        </button>
+
+        <button class="sidebar-category" data-category="Hostel">
+            Hostel Essentials
+        </button>
+
+        <button class="sidebar-category" data-category="Kitchen">
+            Kitchen & Utensils
+        </button>
+
+        <button class="sidebar-category" data-category="Furniture">
+            Furniture
+        </button>
+
+        <button class="sidebar-category" data-category="Sports">
+            Sports Equipment
+        </button>
+
+        <button class="sidebar-category" data-category="Other">
+            Other
+        </button>
+
+        <div class="sidebar-divider"></div>
+
+<div class="sidebar-section-title" id="sidebarAccountTitle">YOUR ACCOUNT</div>
+
+<button class="sidebar-nav-link" id="sidebarWishlistButton">
+    My Wishlist
+</button>
+
+<button class="sidebar-nav-link" id="sidebarSellerButton">
+    Seller Dashboard
+    <span class="cart-count-badge hidden" id="sidebarSellerBadge">0</span>
+</button>
+
+<button class="sidebar-nav-link" id="sidebarAccountButton">
+    My Account
+</button>
+
+<button class="sidebar-nav-link" id="logoutButton">
+    Log out
+</button>
+
+    </aside>
+
+    <!-- CART DRAWER -->
+    <div class="cart-backdrop" id="cartBackdrop"></div>
+
+    <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+
+        <div class="cart-header">
+            <div class="cart-header-title">
+                <button class="page-back-button" id="cartBackButton" type="button" aria-label="Go back">←</button>
+                <h2>Shopping Cart</h2>
+                <span class="cart-header-count" id="cartDrawerCount">(0 items)</span>
+            </div>
+            <button id="closeCartButton" class="close-button" aria-label="Close cart">×</button>
+        </div>
+
+        <!-- BUYER REQUEST NOTIFICATIONS BANNER (Priority 6) -->
+        <div class="cart-request-banner hidden" id="cartRequestBanner">
+            <div class="cart-request-banner-content">
+                <span class="cart-request-banner-text" id="cartRequestBannerText">0 request updates</span>
+            </div>
+            <button class="cart-request-banner-button" id="cartViewRequestsBtn" type="button">View Requests &rarr;</button>
+        </div>
+
+        <div class="cart-body" id="cartBody">
+
+            <div class="cart-empty-state" id="cartEmptyState">
+                <h3>Your cart is empty</h3>
+                <p>Browse campus listings to find books, stationery, electronics, and essentials.</p>
+                <button class="primary-button" id="cartContinueShoppingButton">
+                    Explore Marketplace
+                </button>
+                <button class="secondary-button" id="cartEmptyViewRequestsBtn" type="button" style="margin-top: 6px;">
+                    View My Requests
+                </button>
+            </div>
+
+            <div class="cart-items-list" id="cartItemsList"></div>
+
+        </div>
+
+        <div class="cart-footer hidden" id="cartFooter">
+
+            <div class="cart-summary">
+                <div class="cart-summary-row">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal">₹0</span>
+                </div>
+                <div class="cart-summary-row total-row">
+                    <span>Estimated Total</span>
+                    <span id="cartTotal">₹0</span>
+                </div>
+                <small class="cart-note">
+                    Payment & physical handovers are coordinated between students once the seller accepts your request.
+                </small>
+            </div>
+
+            <p class="cart-status-message" id="cartStatusMessage" aria-live="polite"></p>
+
+            <button class="primary-button cart-checkout-button" id="submitCartRequestsButton">
+                Submit Requests to Sellers
+            </button>
+
+            <button class="cart-continue-link" id="cartCloseAndContinueButton">
+                Continue browsing
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <main>
+
+        <!-- HOME PAGE -->
+        <section class="page home-page" id="homePage">
+
+            <div class="hero">
+
+                <div class="hero-content">
+
+                    <span class="eyebrow">YOUR CAMPUS MARKETPLACE</span>
+
+                    <h1>
+                        Find what you need.<br>
+                        <span>Pass on what you don't.</span>
+                    </h1>
+
+                    <p>
+                        Buy, sell and rent things from students in your
+                        college. From books and clothes to everyday
+                        hostel essentials.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <button class="primary-button" id="exploreButton">
+                            Explore marketplace
+                        </button>
+
+                        <button class="secondary-button" id="heroSellButton">
+                            List an item
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-panel">
+                        <div class="panel-top">
+                            <span>THRIFTLY</span>
+                            <span>For campus life</span>
+                        </div>
+
+                        <div class="panel-content">
+                            <div class="panel-block block-one"></div>
+                            <div class="panel-block block-two"></div>
+                            <div class="panel-block block-three"></div>
+                        </div>
+
+                        <p>Good things deserve a second home.</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- ABOUT SECTION -->
+            <section class="about-section" id="aboutSection">
+
+                <span class="eyebrow">ABOUT THRIFTLY</span>
+
+                <h2>A marketplace made for students.</h2>
+
+                <p>
+                    Thriftly brings your college community together
+                    to buy, sell and rent pre-loved items.
+                    Whether you're looking for affordable essentials
+                    or passing on something you no longer need,
+                    find it all within your campus community.
+                </p>
+
+            </section>
+
+        </section>
+
+
+        <!-- MARKETPLACE PAGE -->
+        <section class="page marketplace-page hidden" id="marketplacePage">
+
+            <button class="page-back-button" id="marketplaceBackButton" type="button" aria-label="Go back">←</button>
+
+            <div class="page-heading">
+                <div>
+                    <span class="eyebrow">THRIFTLY MARKETPLACE</span>
+                    <h1 id="resultsTitle">All listings</h1>
+                    <p id="resultsDescription">
+                        Explore items listed by students in your college.
+                    </p>
+                </div>
+
+                <select id="sortSelect" aria-label="Sort listings">
+                    <option value="newest">Newest first</option>
+                    <option value="low">Price: low to high</option>
+                    <option value="high">Price: high to low</option>
+                </select>
+            </div>
+
+            <div class="marketplace-filters">
+
+                <button class="filter-button selected" data-type="All">
+                    All items
+                </button>
+
+                <button class="filter-button" data-type="Sale">
+                    For sale
+                </button>
+
+                <button class="filter-button" data-type="Rent">
+                    For rent
+                </button>
+
+            </div>
+
+            <div class="results-count" id="resultsCount">
+                0 listings
+            </div>
+
+            <div class="product-grid" id="productGrid"></div>
+
+            <div class="empty-state" id="emptyState">
+
+                <h2 id="emptyTitle">No listings yet</h2>
+
+                <p id="emptyDescription">
+                    Be the first to list something on Thriftly.
+                </p>
+
+                <button class="primary-button" id="emptySellButton">
+                    List an item
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- WISHLIST PAGE -->
+        <section class="page wishlist-page hidden" id="wishlistPage">
+
+            <button class="page-back-button" id="wishlistBackButton" type="button" aria-label="Go back">←</button>
+
+            <div class="page-heading">
+                <div>
+                    <span class="eyebrow">YOUR SAVED ITEMS</span>
+                    <h1>My Wishlist</h1>
+                    <p id="wishlistCountDescription">
+                        Items you have saved for later.
+                    </p>
+                </div>
+            </div>
+
+            <div class="product-grid" id="wishlistGrid"></div>
+
+            <div class="empty-state hidden" id="wishlistEmptyState">
+                <div class="account-empty-icon" style="font-size: 40px; margin-bottom: 8px;">♡</div>
+                <h2>Your wishlist is empty</h2>
+                <p>
+                    Save items you're interested in by clicking the heart icon on any product.
+                </p>
+                <button class="primary-button" id="wishlistExploreButton">
+                    Explore marketplace
+                </button>
+            </div>
+
+        </section>
+
+
+        <!-- PRODUCT DETAILS PAGE -->
+<section class="page product-details-page hidden" id="productDetailsPage">
+
+    <div class="product-details-container">
+
+        <button class="page-back-button" id="productDetailsBack" type="button" aria-label="Go back">
+            ←
+        </button>
+
+        <div class="product-details-content">
+
+            <div class="product-details-image" id="detailsImage">
+            </div>
+
+            <div class="product-details-info">
+
+                <span class="eyebrow" id="detailsCategory"></span>
+
+                <h1 id="detailsTitle">Product title</h1>
+
+                <h2 id="detailsPrice"></h2>
+
+                <span class="product-tag" id="detailsType"></span>
+
+                <p id="detailsCondition"></p>
+
+                <div class="details-divider"></div>
+
+                <h3>About this item</h3>
+                <p id="detailsDescription"></p>
+
+                <div class="details-divider"></div>
+
+                <h3>Seller information</h3>
+                <p id="detailsSeller"></p>
+
+                <div class="product-details-actions">
+                    <button class="primary-button" id="addToCartButton">
+                        Add to Cart
+                    </button>
+
+                    <button class="secondary-button" id="detailsWishlistButton">
+                        ♡ Add to wishlist
+                    </button>
+
+                    <button class="secondary-button" id="messageSellerButton">
+                        Message Seller
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CREATE LISTING PAGE -->
+<section class="page listing-page hidden" id="listingPage">
+
+    <div class="account-container listing-container">
+
+        <button class="page-back-button" id="listingTopBackButton" type="button" aria-label="Go back">
+            ←
+        </button>
+
+        <span class="eyebrow">SELL ON THRIFTLY</span>
+
+        <h1>List your item</h1>
+
+        <p>Give your pre-loved items a new home.</p>
+
+        <form id="listingForm">
+
+            <div class="auth-field">
+                <label for="productTitle">Product title</label>
+                <input
+                    type="text"
+                    id="productTitle"
+                    placeholder="e.g. Engineering Mathematics Book"
+                    maxlength="80"
+                    required
+                >
+            </div>
+
+            <div class="auth-field">
+                <label for="productDescription">Description</label>
+                <textarea
+                    id="productDescription"
+                    placeholder="Describe your item, its condition and other details..."
+                    maxlength="1000"
+                    rows="4"
+                    required
+                ></textarea>
+            </div>
+
+            <div class="auth-field">
+                <label for="productCategory">Category</label>
+                <select id="productCategory" required>
+                    <option value="">Choose a category</option>
+                    <option value="Books">Books & Stationery</option>
+                    <option value="Fashion">Clothes & Accessories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Hostel">Hostel Essentials</option>
+                    <option value="Kitchen">Kitchen & Utensils</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Sports">Sports Equipment</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="auth-field">
+                <label for="productType">Listing type</label>
+                <select id="productType" required>
+                    <option value="Sale">Sell</option>
+                    <option value="Rent">Rent</option>
+                </select>
+            </div>
+
+            <div class="auth-field">
+                <label for="productPrice">Price (₹)</label>
+                <input
+                    type="number"
+                    id="productPrice"
+                    placeholder="Enter amount"
+                    min="1"
+                    step="1"
+                    required
+                >
+            </div>
+
+            <div class="auth-field" id="rentalUnitField" hidden>
+                <label for="rentalUnit">Rental duration unit</label>
+                <select id="rentalUnit">
+                    <option value="day">Per day</option>
+                    <option value="week">Per week</option>
+                    <option value="month">Per month</option>
+                </select>
+            </div>
+
+            <div class="auth-field">
+                <label for="productCondition">Item condition</label>
+                <select id="productCondition" required>
+                    <option value="">Choose condition</option>
+                    <option value="New">New</option>
+                    <option value="Like New">Like new</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                </select>
+            </div>
+
+            <div class="auth-field">
+                <label for="productImage">Product photo</label>
+                <input
+                    type="file"
+                    id="productImage"
+                    accept="image/jpeg,image/png,image/webp"
+                    required
+                >
+                <small>JPEG, PNG or WebP. Maximum size: 5 MB.</small>
+            </div>
+
+            <p id="listingMessage" aria-live="polite"></p>
+
+            <button type="submit" class="primary-button" id="publishListingButton">
+                Publish listing
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- SELLER DASHBOARD -->
+<section class="page seller-dashboard hidden" id="sellerDashboardPage">
+
+    <div class="seller-dashboard-container">
+
+        <button class="page-back-button" id="sellerBackToMarketplace" type="button" aria-label="Go back">
+            ←
+        </button>
+
+        <span class="eyebrow">YOUR SELLER SPACE</span>
+
+        <h1>Seller Dashboard</h1>
+
+        <p>Manage your products, incoming buyer requests, and completed sales.</p>
+
+        <!-- SELLER DASHBOARD TABS -->
+        <div class="seller-nav-tabs" id="sellerNavTabs">
+            <button class="seller-tab-btn active" id="sellerTabOverview" type="button">
+                Overview
+            </button>
+            <button class="seller-tab-btn" id="sellerTabListings" type="button">
+                My Listings (<span id="sellerTabListingsCount">0</span>)
+            </button>
+            <button class="seller-tab-btn" id="sellerTabRequests" type="button">
+                Incoming Requests (<span id="sellerTabRequestsCount">0</span>)
+            </button>
+            <button class="seller-tab-btn" id="sellerTabSales" type="button">
+                Sales History (<span id="sellerTabSalesCount">0</span>)
+            </button>
+        </div>
+
+        <!-- SECTION A: OVERVIEW -->
+        <div class="seller-section" id="sellerSectionOverview">
+
+            <h2>Seller Overview</h2>
+            <p class="seller-section-subtitle">Real-time statistics of your selling activity on Thriftly.</p>
+
+            <div class="seller-stats">
+
+                <div class="seller-stat-card">
+                    <h2 id="totalListingsStat">0</h2>
+                    <p>Total Listings</p>
+                </div>
+
+                <div class="seller-stat-card">
+                    <h2 id="availableListingsStat">0</h2>
+                    <p>Available Listings</p>
+                </div>
+
+                <div class="seller-stat-card">
+                    <h2 id="pendingRequests">0</h2>
+                    <p>Pending Requests</p>
+                </div>
+
+                <div class="seller-stat-card">
+                    <h2 id="acceptedRequests">0</h2>
+                    <p>Accepted Requests</p>
+                </div>
+
+                <div class="seller-stat-card">
+                    <h2 id="completedRequests">0</h2>
+                    <p>Completed Transactions</p>
+                </div>
+
+                <div class="seller-stat-card">
+                    <h2 id="totalRevenueStat">₹0</h2>
+                    <p>Total Earnings</p>
+                </div>
+
+            </div>
+
+            <div class="seller-overview-actions">
+                <div>
+                    <h4 style="margin-bottom: 4px; font-size: 15px;">Quick Actions</h4>
+                    <p>Quickly list a new textbook, calculator, or hostel item on the marketplace.</p>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="primary-button" id="sellerOverviewListBtn" type="button">+ List New Item</button>
+                    <button class="secondary-button" id="sellerOverviewRequestsBtn" type="button">View Incoming Requests</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECTION B: MY LISTINGS -->
+        <div class="seller-section hidden" id="sellerSectionListings">
+
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+                <div>
+                    <h2>My Listings</h2>
+                    <p class="seller-section-subtitle">Manage items you have listed for sale or rent.</p>
+                </div>
+                <button class="primary-button" id="sellerListingsCreateBtn" type="button">+ List New Item</button>
+            </div>
+
+            <div id="sellerDashboardListingsGrid">
+                <p>Loading your listings...</p>
+            </div>
+
+        </div>
+
+        <!-- SECTION C: INCOMING REQUESTS -->
+        <div class="seller-section hidden" id="sellerSectionRequests">
+
+            <div class="seller-requests-section" style="margin-top: 0;">
+
+                <h2>Incoming Requests</h2>
+
+                <p>Requests from students interested in your products.</p>
+
+                <!-- STATUS & TYPE FILTERS (Priority 7) -->
+                <div class="seller-filter-bar">
+                    <div class="seller-status-filters" id="sellerStatusFilters">
+                        <button class="filter-pill active" data-status="all" type="button">All (<span id="filterAllCount">0</span>)</button>
+                        <button class="filter-pill" data-status="Pending" type="button">Pending (<span id="filterPendingCount">0</span>)</button>
+                        <button class="filter-pill" data-status="Accepted" type="button">Accepted (<span id="filterAcceptedCount">0</span>)</button>
+                        <button class="filter-pill" data-status="Completed" type="button">Completed (<span id="filterCompletedCount">0</span>)</button>
+                        <button class="filter-pill" data-status="other" type="button">Declined / Cancelled (<span id="filterOtherCount">0</span>)</button>
+                    </div>
+                    <div class="seller-type-filters" id="sellerTypeFilters">
+                        <button class="filter-pill active" data-type="all" type="button">All Types</button>
+                        <button class="filter-pill" data-type="Sale" type="button">Buy</button>
+                        <button class="filter-pill" data-type="Rent" type="button">Rent</button>
+                    </div>
+                </div>
+
+                <div id="sellerRequestsList">
+
+                    <p>No requests received yet.</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SECTION D: SALES / TRANSACTION HISTORY -->
+        <div class="seller-section hidden" id="sellerSectionSales">
+
+            <h2>Sales & Transaction History</h2>
+            <p class="seller-section-subtitle">Record of all your completed sales and rental transactions.</p>
+
+            <div id="sellerDashboardSalesGrid">
+                <p>Loading your sales history...</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+        <!-- ACCOUNT REQUIRED PAGE -->
+        <section class="page account-page hidden" id="accountPage">
+
+            <div class="account-container">
+
+                <button class="page-back-button" id="backToHomeButton" type="button" aria-label="Go back">
+                    ←
+                </button>
+
+                <span class="eyebrow">JOIN THE THRIFTLY COMMUNITY</span>
+
+                <h1>Before you list an item...</h1>
+
+                <p>
+                    Create your student account or log in to continue.
+                    This helps keep our campus marketplace within
+                    the student community.
+                </p>
+
+                <div class="account-actions">
+
+                    <button class="primary-button" id="registerButton">
+                        Create an account
+                    </button>
+
+                    <button class="secondary-button" id="accountLoginButton">
+                        Already have an account? Log in
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+<!-- MY PROFILE PAGE -->
+
+<!-- MY ACCOUNT DASHBOARD -->
+<section class="page hidden" id="profilePage">
+
+    <div class="my-account-container">
+
+        <button class="page-back-button" id="profileBackButton" type="button" aria-label="Go back">
+            ←
+        </button>
+
+        <!-- PAGE HEADING -->
+        <div class="account-heading">
+            <span class="eyebrow">YOUR THRIFTLY ACCOUNT</span>
+            <h1>My Account</h1>
+            <p>Manage your listings, requests and purchases.</p>
+        </div>
+
+        <!-- PROFILE HEADER -->
+        <div class="account-profile-header">
+
+            <div class="account-profile-left">
+                <div class="profile-avatar" id="profileAvatar">S</div>
+
+                <div class="profile-user-info">
+                    <h2 id="profileName">Student Name</h2>
+                    <p id="profileEmail">student@email.com</p>
+                </div>
+            </div>
+
+            <button class="secondary-button account-header-logout" id="accountHeaderLogoutButton" type="button">
+                Log out
+            </button>
+
+        </div>
+
+        <!-- DASHBOARD LAYOUT -->
+        <div class="account-dashboard-layout">
+
+            <!-- ACCOUNT SIDEBAR -->
+            <aside class="account-menu">
+
+                <button class="account-menu-item active" id="overviewTab">
+                    Overview
+                </button>
+
+                <button class="account-menu-item" id="profileSettingsTab">
+                    Profile Settings
+                </button>
+
+                <button class="account-menu-item" id="purchaseHistoryTab">
+                    Purchase History
+                </button>
+
+                <button class="account-menu-item" id="accountRequestsTab">
+                    My Requests
+                </button>
+
+                <div class="account-menu-divider"></div>
+
+                <button class="account-menu-item account-seller-link" id="accountGoToSellerButton" type="button" style="color: #6d28d9; font-weight: 600;">
+                    Seller Dashboard →
+                    <span class="seller-tab-badge hidden" id="accountSellerBadge">0</span>
+                </button>
+
+                <!-- Compatibility placeholders -->
+                <button class="account-menu-item hidden" id="accountListingsTab" style="display: none;">My Listings</button>
+                <button class="account-menu-item hidden" id="accountIncomingTab" style="display: none;">Incoming Requests</button>
+                <button class="account-menu-item hidden" id="salesHistoryTab" style="display: none;">Sales History</button>
+
+                <div class="account-menu-divider"></div>
+
+                <button class="account-menu-item account-logout-item" id="accountLogoutButton" type="button">
+                    Log out
+                </button>
+
+            </aside>
+
+            <!-- MAIN CONTENT -->
+            <div class="account-main-content">
+
+                <div id="accountOverview">
+
+                    <h2>Overview</h2>
+                    <p class="account-section-description">
+                        Here's what's happening with your account and marketplace activity.
+                    </p>
+
+                    <!-- ACTIVITY STATISTICS -->
+                    <div class="account-stats-grid">
+
+                        <div class="account-stat-card">
+                            <span>Purchases</span>
+                            <h3 id="accountPurchasesCount">0</h3>
+                        </div>
+
+                        <div class="account-stat-card">
+                            <span>My Requests</span>
+                            <h3 id="accountRequestsCount">0</h3>
+                        </div>
+
+                        <div class="account-stat-card">
+                            <span>My Listings</span>
+                            <h3 id="accountListingsCount">0</h3>
+                        </div>
+
+                        <div class="account-stat-card">
+                            <span>Completed Sales</span>
+                            <h3 id="accountSalesCount">0</h3>
+                        </div>
+
+                    </div>
+
+                    <!-- SELLER DASHBOARD CALLOUT -->
+                    <div class="account-seller-promo-card" style="margin: 24px 0; padding: 20px 24px; background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                        <div>
+                            <h3 style="font-size: 16px; color: #5b21b6; margin-bottom: 4px;">Seller Dashboard</h3>
+                            <p style="font-size: 13px; color: var(--muted); margin: 0;">Manage your product listings, accept or decline buyer requests, and track sales revenue.</p>
+                        </div>
+                        <button class="primary-button" id="accountOverviewSellerBtn" type="button" style="background: #7c3aed;">Open Seller Dashboard →</button>
+                    </div>
+
+                    <!-- INCOMING SELLER REQUESTS ON OVERVIEW (Compatibility hidden container) -->
+                    <div class="account-incoming-section hidden" id="accountIncomingSection" style="display: none;">
+                        <div class="account-subheading">
+                            <h3>Incoming Requests from Buyers</h3>
+                            <span class="account-subheading-note">Requests on items you have listed</span>
+                        </div>
+                        <div id="accountIncomingRequestsList">
+                            <p class="account-empty-inline">No incoming requests yet.</p>
+                        </div>
+                    </div>
+
+                    <!-- RECENT ACTIVITY -->
+                    <div class="account-recent-activity">
+
+                        <h3>Recent Activity</h3>
+
+                        <div id="accountRecentActivity">
+                            <p>No recent activity yet.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+<!-- PROFILE SETTINGS -->
+<div id="accountProfileSettings" class="account-tab-content hidden">
+    <h2>Profile Settings</h2>
+    <p class="account-section-description">
+        Manage your personal information.
+    </p>
+    <div id="profileSettingsContent">
+        <p>Profile details will appear here.</p>
+    </div>
+</div>
+
+<!-- MY LISTINGS -->
+<div id="accountMyListings" class="account-tab-content hidden">
+    <h2>My Listings</h2>
+    <p class="account-section-description">
+        Manage the items you've listed on Thriftly.
+    </p>
+    <div id="accountListingsContent">
+        <p>Loading your listings...</p>
+    </div>
+</div>
+
+<!-- INCOMING SELLER REQUESTS TAB (Priority 7) -->
+<div id="accountIncomingRequestsTabContent" class="account-tab-content hidden">
+    <h2>Incoming Requests from Buyers</h2>
+    <p class="account-section-description">
+        Manage buyer requests for your listed items.
+    </p>
+    <div id="accountIncomingTabList">
+        <p>Loading incoming requests...</p>
+    </div>
+</div>
+
+<!-- MY REQUESTS -->
+<div id="accountMyRequests" class="account-tab-content hidden">
+    <h2>My Requests</h2>
+    <p class="account-section-description">
+        Track the items you've requested.
+    </p>
+    <div id="accountRequestsContent">
+        <p>Loading your requests...</p>
+    </div>
+</div>
+
+<!-- PURCHASE HISTORY -->
+<div id="accountPurchaseHistory" class="account-tab-content hidden">
+    <h2>Purchase History</h2>
+    <p class="account-section-description">
+        Keep track of your completed purchases and rentals.
+    </p>
+    <div id="accountPurchasesContent">
+        <p>No completed purchases yet.</p>
+    </div>
+</div>
+
+<!-- SALES HISTORY (SELLER - Priority 8) -->
+<div id="accountSalesHistory" class="account-tab-content hidden">
+    <h2>Sales History</h2>
+    <p class="account-section-description">
+        Record of all your completed sales and rental transactions.
+    </p>
+    <div id="accountSalesContent">
+        <p>Loading your sales history...</p>
+    </div>
+</div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+        <!-- AUTHENTICATION PLACEHOLDER -->
+        
+<!-- AUTHENTICATION PAGE -->
+<section class="page auth-page hidden" id="authPage">
+
+    <div class="account-container">
+
+        <button class="page-back-button" id="backToAccountButton" type="button" aria-label="Go back">
+            ←
+        </button>
+
+        <span class="eyebrow">THRIFTLY ACCOUNT</span>
+
+        <h1 id="authTitle">Create your account</h1>
+
+        <p id="authDescription">
+            Join your college marketplace community.
+        </p>
+
+        <form id="authForm">
+
+            <div class="auth-field" id="nameField">
+                <label for="fullNameInput">Full name</label>
+                <input
+                    type="text"
+                    id="fullNameInput"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                >
+            </div>
+
+            <div class="auth-field">
+                <label for="authEmailInput">College email</label>
+                <input
+                    type="email"
+                    id="authEmailInput"
+                    placeholder="Enter your college email"
+                    autocomplete="email"
+                    required
+                >
+                <span class="auth-field-error hidden" id="authEmailError">Please use your official IGDTUW college email address (@igdtuw.ac.in).</span>
+            </div>
+
+            <div class="auth-field">
+                <label for="authPasswordInput">Password</label>
+                <input
+                    type="password"
+                    id="authPasswordInput"
+                    placeholder="Create a password"
+                    autocomplete="new-password"
+                    required
+                >
+            </div>
+
+            <div class="auth-field" id="confirmPasswordField">
+                <label for="confirmPasswordInput">
+                    Confirm password
+                </label>
+                <input
+                    type="password"
+                    id="confirmPasswordInput"
+                    placeholder="Re-enter your password"
+                    autocomplete="new-password"
+                >
+            </div>
+
+            <p id="authMessage" aria-live="polite"></p>
+
+            <button
+                type="button"
+                class="primary-button"
+                id="authSubmitButton"
+            >
+                Create account
+            </button>
+
+        </form>
+
+        <p class="auth-switch">
+            Already have an account?
+            <button type="button" id="authSwitchButton">
+                Log in
+            </button>
+        </p>
+
+    </div>
+
+</section>
+
+<!-- MY REQUESTS PAGE -->
+<section class="page hidden" id="myRequestsPage">
+    <div class="seller-dashboard-container">
+        <button class="page-back-button" id="myRequestsBackButton" type="button" aria-label="Go back">
+            ←
+        </button>
+        <span class="eyebrow">YOUR ACTIVITY</span>
+        <h1>My Requests</h1>
+        <p>Track the status of products you've requested.</p>
+
+        <div id="myRequestsList">
+            <p>Loading your requests...</p>
+        </div>
+    </div>
+</section>
+
+<!-- MY LISTINGS PAGE -->
+<section class="page hidden" id="myListingsPage">
+
+    <div class="seller-dashboard-container">
+
+        <button class="page-back-button" id="myListingsBackButton" type="button" aria-label="Go back">
+            ←
+        </button>
+
+        <span class="eyebrow">YOUR SELLER SPACE</span>
+
+        <h1>My Listings</h1>
+
+        <p>Manage the products you've listed on Thriftly.</p>
+
+        <div id="myListingsContainer">
+            <p>Loading your listings...</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- MESSAGES PAGE -->
+<section class="page hidden" id="messagesPage">
+
+    <div class="messages-container">
+
+        <button class="page-back-button" id="messagesBackButton" type="button" aria-label="Go back">
+            ←
+        </button>
+
+        <div class="messages-heading">
+            <div>
+                <span class="eyebrow">STAY CONNECTED</span>
+                <h1>Messages</h1>
+                <p>Your conversations with students on campus.</p>
+            </div>
+        </div>
+
+        <div class="messaging-layout">
+
+            <!-- LEFT: CONVERSATION LIST -->
+            <div class="conversations-panel">
+
+                <div class="conversations-header">
+                    <h2>Chats</h2>
+                </div>
+
+                <div class="conversation-search">
+                    <input
+                        type="search"
+                        id="conversationSearch"
+                        placeholder="Search conversations..."
+                    >
+                </div>
+
+                <div id="conversationsList">
+                    <p>Your conversations will appear here.</p>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: CHAT WINDOW -->
+            <div class="chat-panel" id="chatPanel">
+
+                <div class="chat-empty-state" id="chatEmptyState">
+                    <div class="chat-empty-icon">✉</div>
+                    <h2>Your messages, all in one place.</h2>
+                    <p>
+                        Select a conversation to chat with
+                        another student.
+                    </p>
+                </div>
+
+                <div id="activeChat" class="active-chat hidden">
+
+                    <!-- CHAT HEADER -->
+                    <div class="chat-header">
+
+                        <button class="chat-back-button" id="chatBackButton" type="button" aria-label="Back to conversations">
+                            ←
+                        </button>
+
+                        <div class="chat-user-info">
+                            <div class="chat-avatar" id="chatAvatar">
+                                S
+                            </div>
+
+                            <div>
+                                <h3 id="chatUserName">Student</h3>
+                                <p id="chatProductName">
+                                    Product conversation
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- PRODUCT REFERENCE -->
+                    <div class="chat-product-info" id="chatProductInfo">
+
+                        <img id="chatProductImage" src="" alt="Product">
+
+                        <div>
+                            <span>DISCUSSING ITEM</span>
+                            <h4 id="chatProductTitle">Product</h4>
+                        </div>
+
+                    </div>
+
+                    <!-- MESSAGES -->
+                    <div class="chat-messages" id="chatMessages">
+                    </div>
+
+                    <!-- MESSAGE INPUT -->
+                    <form class="chat-input-area" id="messageForm">
+
+                        <input
+                            type="text"
+                            id="messageInput"
+                            placeholder="Write a message..."
+                            maxlength="2000"
+                            autocomplete="off"
+                            required
+                        >
+
+                        <button type="submit" id="sendMessageButton">
+                            Send
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+    </main>
+
+
+<!-- FLOATING MESSAGES BUTTON -->
+<button
+    class="floating-messages-button"
+    id="messagesButton"
+    aria-label="Open messages"
+    title="Messages"
+>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/>
+    </svg>
+
+    <span class="message-notification-dot" id="messageNotificationDot"></span>
+</button>
+
+
+
+    <!-- EDIT LISTING MODAL -->
+    <div class="edit-modal-backdrop hidden" id="editListingModalBackdrop"></div>
+    <div class="edit-modal hidden" id="editListingModal" role="dialog" aria-labelledby="editListingModalTitle" aria-modal="true">
+        <div class="edit-modal-header">
+            <div>
+                <span class="eyebrow">UPDATE LISTING</span>
+                <h2 id="editListingModalTitle">Edit Product Listing</h2>
+            </div>
+            <button type="button" class="close-button" id="closeEditModalButton" aria-label="Close edit modal">×</button>
+        </div>
+
+        <form id="editListingForm" class="edit-modal-form">
+            <input type="hidden" id="editProductId">
+
+            <!-- Product Title -->
+            <div class="auth-field">
+                <label for="editProductTitle">Product title</label>
+                <input
+                    type="text"
+                    id="editProductTitle"
+                    placeholder="e.g. Engineering Mathematics Book"
+                    maxlength="80"
+                    required
+                >
+            </div>
+
+            <!-- Description -->
+            <div class="auth-field">
+                <label for="editProductDescription">Description</label>
+                <textarea
+                    id="editProductDescription"
+                    placeholder="Describe your item, its condition and other details..."
+                    maxlength="1000"
+                    rows="4"
+                    required
+                ></textarea>
+            </div>
+
+            <!-- Category -->
+            <div class="auth-field">
+                <label for="editProductCategory">Category</label>
+                <select id="editProductCategory" required>
+                    <option value="">Choose a category</option>
+                    <option value="Books">Books & Stationery</option>
+                    <option value="Fashion">Clothes & Accessories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Hostel">Hostel Essentials</option>
+                    <option value="Kitchen">Kitchen & Utensils</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Sports">Sports Equipment</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <!-- Listing Type -->
+            <div class="auth-field">
+                <label for="editProductType">Listing type</label>
+                <select id="editProductType" required>
+                    <option value="Sale">Sell</option>
+                    <option value="Rent">Rent</option>
+                </select>
+                <small class="field-note hidden" id="editProductTypeNote"></small>
+            </div>
+
+            <!-- Price -->
+            <div class="auth-field">
+                <label for="editProductPrice" id="editPriceLabel">Price (₹)</label>
+                <input
+                    type="number"
+                    id="editProductPrice"
+                    placeholder="Enter amount"
+                    min="1"
+                    step="1"
+                    required
+                >
+            </div>
+
+            <!-- Rental Duration Unit -->
+            <div class="auth-field" id="editRentalUnitField" hidden>
+                <label for="editRentalUnit">Rental duration unit</label>
+                <select id="editRentalUnit">
+                    <option value="day">Per day</option>
+                    <option value="week">Per week</option>
+                    <option value="month">Per month</option>
+                </select>
+            </div>
+
+            <!-- Item Condition -->
+            <div class="auth-field">
+                <label for="editProductCondition">Item condition</label>
+                <select id="editProductCondition" required>
+                    <option value="">Choose condition</option>
+                    <option value="New">New</option>
+                    <option value="Like New">Like new</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                </select>
+            </div>
+
+            <!-- Product Photo (Optional to replace) -->
+            <div class="auth-field">
+                <label for="editProductImage">Replace product photo <span class="optional-tag">(Optional)</span></label>
+                <div class="edit-current-image-preview" id="editCurrentImageContainer">
+                    <img id="editCurrentImagePreview" src="" alt="Current photo" class="edit-preview-thumb">
+                    <span class="edit-preview-caption">Current photo will be kept if no new image is selected.</span>
+                </div>
+                <input
+                    type="file"
+                    id="editProductImage"
+                    accept="image/jpeg,image/png,image/webp"
+                >
+                <small>Leave empty to keep existing image. JPEG, PNG or WebP under 5 MB.</small>
+            </div>
+
+            <p id="editListingMessage" class="listing-message" aria-live="polite"></p>
+
+            <div class="edit-modal-actions">
+                <button type="button" class="secondary-button" id="cancelEditModalButton">Cancel</button>
+                <button type="submit" class="primary-button" id="saveEditModalButton">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <a href="#" class="logo" id="footerHomeLink">
+            Thriftly<span>.</span>
+        </a>
+
+        <p>Buy less new. Find more useful.</p>
+
+        <span>Made for campus life.</span>
+
+    </footer>
+
+
+    <script type="module" src="script.js"></script>
+
+</body>
+</html>
+
